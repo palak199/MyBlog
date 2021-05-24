@@ -1,33 +1,32 @@
-import './App.css';
+import React from 'react'
+import {useEffect, useState} from 'react'
 import Posts from './components/Posts'
-import PostLoadingComponent from './components/PostLoading'
-import React,{useEffect, useState} from 'react'
+import PostLoadingComponent from './components/PostLoading';
 
 function App(){
   const PostLoading = PostLoadingComponent(Posts);
-  const [appState,setAppState] = useState({
+  const [appState, setAppState] = useState({
+    posts: null,
     loading: false,
-    posts: null
   });
-
-  useEffect(()=>{
-    setAppState({ loading: true });
-    const apiUrl = 'http://localhost:8000/api/';
+  useEffect(() => {
+    setAppState({loading: true})
+    const apiUrl = 'http://localhost:8000/api/'
     fetch(apiUrl)
-      .then((response)=>response.json())
-      .then((posts)=>{
-        console.log(posts)
-        setAppState({ loading:false, posts:posts })
+    .then((data) => data.json())
+    .then((posts) => {
+      setAppState({ loading: false, posts: posts });
     })
-  },[setAppState]);
+    .catch((error) => console.log(error))
+  }, [setAppState])
   
-  return (
-    <div className="App">
-      <h1>Latest Posts</h1>
-      <PostLoading isLoading={appState.loading} posts={appState.posts}/>
-    </div>
-  )
-  }
-
+    return(
+      <div className="App">
+        <h1>Recently Brewed Blogs</h1>
+        <PostLoading isLoading={appState.loading} posts={appState.posts} />
+        </div>
+    )
+  
+}
 
 export default App;
