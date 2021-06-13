@@ -29,7 +29,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'blog_api',
-    'rest_framework'
+    'corsheaders',
+    'rest_framework',
+    'user',
+
 ]
 
 MIDDLEWARE = [
@@ -126,5 +129,11 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
         
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
     ]
 }
+
+# custom user model
+AUTH_USER_MODEL = 'user.NewUser'
